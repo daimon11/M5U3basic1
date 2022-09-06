@@ -1,43 +1,39 @@
 'use strict';
 
 const start = () => {
+  const list = document.querySelector('.list');
+
   const deleteValue = (a) => {
     a.removeChild(a.lastElementChild);
-    return start();
   };
 
   const clearValue = (a) => {
     a.textContent = '';
-    return start();
   };
 
-  const writeValue = (a, b, c) => {
-    b.insertAdjacentElement('beforeend', c);
-    c.insertAdjacentText('beforeend', a);
-    return start();
+  const writeValue = (date) => {
+    const userElem = document.createElement('li');
+    list.insertAdjacentElement('beforeend', userElem);
+    userElem.insertAdjacentText('beforeend', date);
   };
 
   const asking = () => {
-    const list = document.querySelector('.list');
-    const userElem = document.createElement('li');
     const userDate = prompt('Введите данные:', '');
     switch (true) {
+      case (userDate === 'exit' || userDate === null):
+        return;
       case (userDate === 'del'):
         deleteValue(list);
         break;
       case (userDate === 'clear'):
         clearValue();
         break;
-      case (userDate === 'exit' || userDate === null):
-        break;
       case (userDate.trim() !== ''):
-        writeValue(userDate, list, userElem);
+        writeValue(userDate);
         break;
-      default:
-        return asking();
     }
+    return asking();
   };
-
-  return asking();
+  asking();
 };
 start();
